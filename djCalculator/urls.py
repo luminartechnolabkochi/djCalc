@@ -29,7 +29,9 @@ urlpatterns = [
     path("register/",views.SignUpView.as_view()),
 
     path("bmi/",views.BmiView.as_view()),
-    
+
+    path("milage/",views.MilageView.as_view())
+
 
 
 

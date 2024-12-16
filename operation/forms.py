@@ -31,3 +31,11 @@ class BmiForm(forms.Form):
     height=forms.IntegerField()
 
     weight=forms.IntegerField()
+
+class MilageForm(forms.Form):
+
+    distance=forms.IntegerField()
+
+    consumption=forms.IntegerField()
+
+    

@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.views.generic import View
 
-from operation.forms import ResgisterationForm,BmiForm
+from operation.forms import ResgisterationForm,BmiForm,MilageForm
 # Create your views here.
 
 
@@ -120,6 +120,40 @@ class BmiView(View):
 
 
        
-   
+class MilageView(View):
+
+
+    def get(self,request,*args,**kwargs):
+
+
+        form_instance=MilageForm()
+
+        context={
+            "form":form_instance
+        }
+
+        return render(request,"milage.html",context)
+    
+    def post(self,request,*args,**kwargs):
+
+        form_data=request.POST
+
+        form_instance=MilageForm(form_data)
+
+        if form_instance.is_valid():
+
+            data=form_instance.cleaned_data
+
+            distance=data.get("distance")
+
+            consumption=data.get("consumption")
+
+            milage=distance/consumption
+
+        return  render(request,"milage.html",{"form":form_instance,"result":milage})
+
+
+
+
 
 
