@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.views.generic import View
 
-from operation.forms import ResgisterationForm,BmiForm,MilageForm
+from operation.forms import ResgisterationForm,BmiForm,MilageForm,CalorieForm
 # Create your views here.
 
 
@@ -153,6 +153,58 @@ class MilageView(View):
         return  render(request,"milage.html",{"form":form_instance,"result":milage})
 
 
+
+class CalorieView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        form_instance=CalorieForm()
+
+        context={
+            "form":form_instance
+        }
+
+        return render(request,"calorie.html",context)
+    
+    def post(self,request,*args,**kwargs):
+
+        form_data=request.POST
+
+        form_instance=CalorieForm(form_data)
+
+        if form_instance.is_valid():
+
+            data=form_instance.cleaned_data
+
+            print(data)#{'weight': 65, 'height': 165, 'age': 32, 'gender': 'male', 'activity': '1.2'}
+            """
+            The Basal Metabolic Rate (BMR)=
+
+                10 * weight (kg) + 6.25 * height(cm) - 5 * age(y) + 5 for (man)
+
+                10 * weight(kg) + 6.25 * height(cm) - 5 * age(y) - 161 for ​(woman)
+
+                To determin​e your total daily calorie needs, multiply your BMR by the appropriate activity factor, as follows:
+            """
+            weight=data.get("weight")
+
+            height=data.get("height")
+
+            age=data.get("age")
+
+            gender=data.get("gender")
+
+            activity=data.get("activity")
+
+            if gender=="male":
+
+                BMR=10*weight+6.25*height-5*age+5
+            else:
+                BMR=10*weight+6.25*height-5*age-161
+
+            calorie=BMR*float(activity)
+
+        return render(request,"calorie.html",{"form":form_instance,"bmr":BMR,"calorie":calorie})
 
 
 

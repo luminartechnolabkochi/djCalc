@@ -30,7 +30,9 @@ urlpatterns = [
 
     path("bmi/",views.BmiView.as_view()),
 
-    path("milage/",views.MilageView.as_view())
+    path("milage/",views.MilageView.as_view()),
+
+    path("calorie/",views.CalorieView.as_view()),
 
 
 
